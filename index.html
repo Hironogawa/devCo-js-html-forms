@@ -10,7 +10,26 @@
   <body>
     <div class="flex-container">
       <h1>HTML Forms</h1>
-      <form action="./result.html" id="firstForm" onsubmit="updateRestult()">
+      <!--
+        EN:
+        - "action" tells the browser to which file/site the form should transfer data to.
+        - "method" defines how the data will be transfered (ex. Get or POST)
+        - "onsubmit" is a html event that is triggered on submiting the form
+
+        DE:
+        - «action» sagt dem browser an welche Datei/Seite das Formular die Daten übergeben muss.
+        - «method» legt fest wie die daten übermittelt werden (zBsp. GET oder POST)
+        - "onsubmit" ist ein html event das beim absenden des formulars ausgelöst wird.
+      -->
+      <form
+        id="firstForm"
+        action="./result.html"
+        method="GET"
+        onsubmit="updateRestult()"
+      >
+        <!--
+          EN: the for attribute in a label defines to which...
+        -->
         <label for="firstName">First Name: </label><br />
         <input type="text" id="firstName" name="firstName" /><br />
 
@@ -34,8 +53,11 @@
           min="1"
           max="5"
         /><br />
-
         <label for="company">Company: </label><br />
+        <!--
+          EN: The input tag can be a submit type. We also can trigger a submit with a regular <button>Submit</button> tag.
+          DE: Es ist möglich dem input tag den «type» submit zuzuweisen. Natürlich ist es auch möglich mit einem regulären <button>Absenden</button> tag das Fromular abzusenden.
+        -->
         <input
           type="text"
           id="company"
@@ -49,24 +71,39 @@
     </div>
     <script>
       /*
-        EN: Get the value from the element by the id...
-        DE: Hole die value daten vom element mit der id...
+        EN: create the variables
+
+        DE: erstellt die variablen
       */
+      const firstName = document.getElementById("firstName");
+      const lastName = document.getElementById("lastName");
+      const email = document.getElementById("email");
+      const zip = document.getElementById("zip");
+      const city = document.getElementById("city");
+      const quantity = document.getElementById("quantity");
+      const company = document.getElementById("company");
 
       function updateRestult() {
-        // event.preventDefault();
+        /*
+          EN: Save the value as ("key", value) pair to the session storage.
 
-        let firstName = document.getElementById("firstName").value;
-        let lastName = document.getElementById("lastName").value;
-        let email = document.getElementById("email").value;
-        let zip = document.getElementById("zip").value;
-        let city = document.getElementById("city").value;
-        let quantity = document.getElementById("quantity").value;
-        let company = document.getElementById("company").value;
+          DE: Speichere die daten als ("key", value) paar in den session speicher.
+        */
+        sessionStorage.setItem("fNAme", firstName.value);
+        sessionStorage.setItem("lName", lastName.value);
+        sessionStorage.setItem("emailAddress", email.value);
+        sessionStorage.setItem("zipCode", zip.value);
+        sessionStorage.setItem("cityName", city.value);
+        sessionStorage.setItem("quantityNumber", quantity.value);
+        sessionStorage.setItem("companyName", company.value);
+      }
 
-        console.log(firstName, "test");
-        sessionStorage.setItem("fNAme", firstName);
-        sessionStorage.setItem("lName", lastName);
+      function setInputWithSessionData() {
+        /*
+        EN: Additional function to presist data in the Form.
+
+        DE: Zusätzliche Funktion um die Daten im Formular zu behalten.
+        */
       }
     </script>
   </body>
