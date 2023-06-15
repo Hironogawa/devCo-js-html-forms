@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>HTML Form Exercise</title>
+  </head>
+  <body>
+    <div class="flex-container">
+      <h1>HTML Forms</h1>
+      <form action="./result.html" id="firstForm" onsubmit="updateRestult()">
+        <label for="firstName">First Name: </label><br />
+        <input type="text" id="firstName" name="firstName" /><br />
+
+        <label for="lastName">Last Name: </label><br />
+        <input type="text" id="lastName" name="lastName" /><br />
+
+        <label for="email">Email: </label><br />
+        <input type="email" id="email" name="email" /><br />
+
+        <label for="zip">Zip: </label><br />
+        <input type="number" id="zip" name="zip" /><br />
+
+        <label for="city">City: </label><br />
+        <input type="text" id="city" name="city" /><br />
+
+        <label for="quantity">Quantity: </label><br />
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          min="1"
+          max="5"
+        /><br />
+
+        <label for="company">Company: </label><br />
+        <input
+          type="text"
+          id="company"
+          name="company"
+          value="Opportunity"
+          readonly
+        /><br />
+
+        <input class="form-button" type="submit" value="submit" />
+      </form>
+    </div>
+    <script>
+      /*
+        EN: Get the value from the element by the id...
+        DE: Hole die value daten vom element mit der id...
+      */
+
+      function updateRestult() {
+        // event.preventDefault();
+
+        let firstName = document.getElementById("firstName").value;
+        let lastName = document.getElementById("lastName").value;
+        let email = document.getElementById("email").value;
+        let zip = document.getElementById("zip").value;
+        let city = document.getElementById("city").value;
+        let quantity = document.getElementById("quantity").value;
+        let company = document.getElementById("company").value;
+
+        console.log(firstName, "test");
+        sessionStorage.setItem("fNAme", firstName);
+        sessionStorage.setItem("lName", lastName);
+      }
+    </script>
+  </body>
+</html>
