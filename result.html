@@ -17,8 +17,10 @@
     <script>
       let firstName = sessionStorage.getItem("fNAme");
       let lastName = sessionStorage.getItem("lName");
+      let email = sessionStorage.getItem("emailAddress");
 
-      let result = "Welcome " + firstName + " " + lastName;
+      let result =
+        "Welcome " + firstName + " " + lastName + " meine Email:" + email;
 
       document.getElementById("result").innerHTML = result;
 
