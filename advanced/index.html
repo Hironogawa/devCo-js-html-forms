@@ -73,9 +73,6 @@
           </select>
           <span class="error-message"></span>
         </div>
-        <!--
-          The input tag can be a submit type. We also can trigger a submit with a regular <button>Submit</button> tag.
-        -->
         <input
           type="hidden"
           name="secret_field"
@@ -87,6 +84,9 @@
           <span class="error-message"></span>
         </div>
 
+        <!--
+          The input tag can be a submit type. We also can trigger a submit with a regular <button>Submit</button> tag.
+        -->
         <input class="form-button" type="submit" value="submit" />
       </form>
     </div>
@@ -130,7 +130,7 @@
 
       function submitForm() {
         /*
-          Save the value as ("key", value) pair to the session storage.
+          Save the value as (key, value) pair to the session storage.
         */
         event.preventDefault();
 
