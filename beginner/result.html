@@ -4,9 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="./js/main.js"></script>
     <link rel="stylesheet" href="./css/style.css" />
-    <title>HTML Form – Result</title>
+    <title>HTML Form - Result</title>
   </head>
   <body>
     <button class="cta-btn" onclick="goSiteBack()">←</button>
@@ -15,9 +14,9 @@
       <div id="result">Empty</div>
     </div>
     <script>
-      let firstName = sessionStorage.getItem("fNAme");
-      let lastName = sessionStorage.getItem("lName");
-      let email = sessionStorage.getItem("emailAddress");
+      let firstName = sessionStorage.getItem("first_name");
+      let lastName = sessionStorage.getItem("last_name");
+      let email = sessionStorage.getItem("email");
 
       let result =
         "Welcome " + firstName + " " + lastName + " meine Email:" + email;

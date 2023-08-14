@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>HTML Form Exercise</title>
+  </head>
+  <body>
+    <div class="flex-container">
+      <h1>HTML Forms</h1>
+
+      <!-- 
+        "action" = in the action attribute we define the file to which the form should be submitted to.
+        "method" = in method we define how the data should be submitted (GET or POST).
+        "onsubmit" = onsubmit is a html event that is triggered on submiting the form.
+      -->
+
+      <form
+        id="first-form"
+        action="./result.html"
+        method="GET"
+        onsubmit="submitForm(event)"
+      >
+        <!--
+          The for attribute in a label defines to which input field the label belongs to.
+        -->
+        <div class="input-container">
+          <label for="first_name">First Name: </label>
+          <input type="text" name="first_name" />
+          <span class="error-message"></span>
+        </div>
+
+        <div class="input-container">
+          <label for="last_name">Last Name: </label>
+          <input type="text" name="last_name" />
+          <span class="error-message"></span>
+        </div>
+
+        <div class="input-container">
+          <label for="email">Email: </label>
+          <input type="email" name="email" />
+          <span class="error-message"></span>
+        </div>
+
+        <div class="input-container">
+          <label for="zip">Zip: </label>
+          <input type="text" name="zip" />
+          <span class="error-message"></span>
+        </div>
+
+        <div class="input-container">
+          <label for="city">City: </label>
+          <input type="text" name="city" />
+          <span class="error-message"></span>
+        </div>
+
+        <div class="input-container">
+          <label for="quantity">Quantity: </label>
+          <input type="number" name="quantity" />
+          <span class="error-message"></span>
+        </div>
+
+        <div class="input-container">
+          <label for="computer">computer: </label>
+          <select name="computer">
+            <option disabled selected value>-- select an option --</option>
+            <option value="Dell">Dell</option>
+            <option value="HP">HP</option>
+            <option value="Lenovo">Lenovo</option>
+            <option value="Asus">Asus</option>
+          </select>
+          <span class="error-message"></span>
+        </div>
+        <!--
+          The input tag can be a submit type. We also can trigger a submit with a regular <button>Submit</button> tag.
+        -->
+        <input
+          type="hidden"
+          name="secret_field"
+          value="This is a secret value"
+        />
+        <div class="input-container">
+          <label for="company">Company: </label>
+          <input type="text" name="company" value="Opportunity" readonly />
+          <span class="error-message"></span>
+        </div>
+
+        <input class="form-button" type="submit" value="submit" />
+      </form>
+    </div>
+    <script>
+      function validation(formDataParam, rulesParam) {
+        clearErrorMessages(); /* Clear the error messages before checking the rules,
+        otherwise the error messages will pressist. */
+        /*
+          Loop through the rules array and check if the rules are met.
+          If the rules are not met, push the error message to the errorMessages array.
+        */
+
+        const errors = [];
+        rulesParam.forEach((rule) => {
+          if (!rule.method(formDataParam[rule.field])) {
+            errors.push(rule);
+          }
+        });
+
+        // check if the errors array is empty.
+        if (errors.length > 0) {
+          errors.forEach((rule) => {
+            document.querySelector(
+              `[name='${rule.field}'] + .error-message`
+            ).innerHTML = rule.message;
+          });
+          return false;
+        } else {
+          return true;
+        }
+
+        function clearErrorMessages() {
+          /*
+            Reset the error messages.
+          */
+          document.querySelectorAll(".error-message").forEach((element) => {
+            element.innerHTML = "";
+          });
+        }
+      }
+
+      function submitForm() {
+        /*
+          Save the value as ("key", value) pair to the session storage.
+        */
+        event.preventDefault();
+
+        const formData = {
+          first_name: document.querySelector("[name='first_name']").value,
+          last_name: document.querySelector("[name='last_name']").value,
+          email: document.querySelector("[name='email']").value,
+          zip: document.querySelector("[name='zip']").value,
+          city: document.querySelector("[name='city']").value,
+          quantity: document.querySelector("[name='quantity']").value,
+          computer: document.querySelector("[name='computer']").value,
+          secret_field: document.querySelector("[name='secret_field']").value,
+          company: document.querySelector("[name='company']").value,
+        };
+
+        // We create an array with the rules for each field.
+        const rules = [
+          {
+            field: "first_name",
+            method: (value) => value.length > 0, // check if the value is greater than 0, else return false.
+            message: "First Name is required",
+          },
+          {
+            field: "last_name",
+            method: (value) => value.length > 0, // check if the value is greater than 0, else return false.
+            message: "First Name is required",
+          },
+          {
+            field: "email",
+            method: (value) => /\S+@\S+\.\S+/.test(value), // Regex for email validation.
+            message: "Please provide a valid email address",
+          },
+          {
+            field: "zip",
+            method: (value) =>
+              /^[0-9]+$/.test(value) && parseInt(value) >= 1000, // the lowest zip code in Switzerland is 1000, returns false if the value is not a number and not greater than 1000.
+            message: "This field must be a combination of numbers",
+          },
+          {
+            field: "city",
+            method: (value) => value.length > 0,
+            message: "City is required",
+          },
+          {
+            field: "quantity",
+            method: (value) =>
+              typeof parseInt(value) === "number" && parseInt(value) > 0,
+            /* typeof check if the value is a number, we convert the value to a number with parseInt()
+              and check if the value is greater than 0. This metho is less strict than the regex method above and
+              the user can enter a number with characters like "1a". 
+
+              We use it here because the input type is a number and a regular user can't enter a string. */
+            message: "You can't order 0 computers",
+          },
+          {
+            field: "computer",
+            method: (value) => value.length > 0,
+            message: "Please select a computer",
+          },
+          {
+            field: "company",
+            method: (value) => value.length > 0,
+            message: "Please select a computer",
+          },
+        ];
+
+        // We call the validation function and pass the formData and rules as arguments.
+        if (validation(formData, rules)) {
+          sessionStorage.setItem("formData", JSON.stringify(formData));
+          document.querySelector("#first-form").submit();
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>HTML Form Exercise</title>
+  </head>
+  <body>
+    <!-- prettier-ignore -->
+    <div class="flex-container">
+      <h1>HTML Forms</h1>
+      <!--
+        "action" tells the browser to which file/site the form should transfer data to.
+        "method" defines how the data will be transfered (ex. Get or POST)
+        "onsubmit" is a html event that is triggered on submiting the form
+      -->
+      <form
+        id="first-form"
+        action="./result.html"
+        method="GET"
+        onsubmit="submitForm()"
+      >
+        <!--
+          The for attribute in a label defines to which input the label belongs to.
+        -->
+        <label for="firstName">First Name: </label><br />
+        <input type="text" id="firstName" name="first_name" required /><br />
+        <span id="error-message-first-name"></span><br />
+
+        <label for="lastName">Last Name: </label><br />
+        <input type="text" id="lastName" name="last_name" /><br />
+        <span id="error-message-last-name"></span><br />
+
+        <label for="email">Email: </label><br />
+        <input type="email" id="email" name="email" /><br />
+        <span id="error-message-email"></span><br />
+
+        <label for="zip">Zip: </label><br />
+        <input type="number" id="zip" name="zip" /><br />
+        <span id="error-message-zip"></span><br />
+
+        <label for="city">City: </label><br />
+        <input type="text" id="city" name="city" /><br />
+        <span id="error-message-city"></span><br />
+
+        <label for="quantity">Quantity: </label><br />
+        <input type="number" id="quantity" name="quantity" min="1"  max="5" /><br />
+        <span id="error-message-quantity"></span><br />
+
+        <label for="company">Company: </label><br />
+        <input type="hidden" id="secretField" name="select_field" value="A Secret Word" /><br />
+        <span id="error-message-company"></span><br />
+        <!--
+          The input tag can be a submit type. We also can trigger a submit with a regular <button>Submit</button> tag.
+        -->
+        <input type="text" id="company" name="company" value="Opportunity"readonly /><br />
+        <input type="submit" value="Submit"class="form-button"/>
+      </form>
+    </div>
+    <script>
+      // prettier-ignore
+      function submitForm() {
+        event.preventDefault(); // Prevents the default behaviour of the form. In this case, the form will not be submitted.
+        /*
+          Get the values from the input fields.
+        */
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const email = document.getElementById("email").value;
+        const zip = document.getElementById("zip").value;
+        const city = document.getElementById("city").value;
+        const quantity = document.getElementById("quantity").value;
+        const company = document.getElementById("company").value;
+        const secretField = document.getElementById("secretField").value;
+
+        // Validate the form
+        const errors = [];
+        if (firstName === "") {
+          document.getElementById("error-message-first-name").innerHTML = "Please enter your first name";
+          errors.push("first_name")
+        } else {
+          document.getElementById("error-message-first-name").innerHTML = "";
+        }
+
+        if(lastName.length <= 0) {
+          document.getElementById("error-message-last-name").innerHTML = "Please enter your last name";
+          errors.push("last_name")
+        } else {
+          document.getElementById("error-message-last-name").innerHTML = "";
+        }
+
+        if(email.includes("@") === false) {
+          document.getElementById("error-message-email").innerHTML = "Please enter your email";
+          errors.push("email")
+        } else {
+          document.getElementById("error-message-email").innerHTML = "";
+        }
+
+        if(zip <= 1000) {
+          document.getElementById("error-message-zip").innerHTML = "Please enter your zip";
+          errors.push("zip")
+        } else {
+          document.getElementById("error-message-zip").innerHTML = "";
+        }
+
+        if(city === "") {
+          document.getElementById("error-message-city").innerHTML = "Please enter your city";
+          errors.push("city")
+        } else {
+          document.getElementById("error-message-city").innerHTML = "";
+        }
+
+        if(quantity <= 0) {
+          document.getElementById("error-message-quantity").innerHTML = "Please enter your quantity";
+          errors.push("quantity")
+        } else {
+          document.getElementById("error-message-quantity").innerHTML = "";
+        }
+        
+        if(errors.length > 0) { // If there are errors, we don't submit the form.
+          return false;
+        }
+
+        /*
+          Saves the value as ("key", value) pair to the session storage.
+        */
+        sessionStorage.setItem("first_name", firstName);
+        sessionStorage.setItem("last_name", lastName);
+        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("zip", zip);
+        sessionStorage.setItem("city", city);
+        sessionStorage.setItem("quantity", quantity);
+        sessionStorage.setItem("company", company);
+        sessionStorage.setItem("secret_field", secretField);
+
+        const form = document.getElementById("first-form");
+        form.submit(); // We can submit the form with the submit() method manually.
+      }
+
+      function validateForm() {}
+    </script>
+  </body>
+</html>
